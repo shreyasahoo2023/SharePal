@@ -1,4 +1,9 @@
-function Hero() {
+import { useState } from "react";
+import { Gamepad2 } from "lucide-react";
+
+function Hero({ featuredImage }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
   const scrollToGaming = () => {
     document
       .getElementById("gaming")
@@ -16,20 +21,12 @@ function Hero() {
       ========================= */}
 
       <div className="hero-content">
-
-        <p className="section-label">
-          GAMING GADGETS ON RENT
-        </p>
-
-        <h1>
-          Game More.
-          <br />
-          Spend Less.
-        </h1>
-
+        <p className="section-label">SHAREPAL · BANGALORE</p>
+        <h1>Gaming Consoles</h1>
         <p>
-          Rent premium gaming consoles, accessories and
-          entertainment gadgets without buying them.
+          Rent the latest gaming gadgets from SharePal
+          <br />
+          PS5, Xbox, Oculus VR, Racing Wheel on rent.
         </p>
 
         <div className="hero-buttons">
@@ -60,22 +57,22 @@ function Hero() {
       */}
 
       <div className="hero-visual">
-
         <div className="hero-circle">
-
-          <div
-            style={{
-              fontSize: "100px",
-              lineHeight: "1",
-            }}
-            aria-label="Gaming controller"
-            role="img"
-          >
-            🎮
-          </div>
-
+          {featuredImage && !imageFailed ? (
+            <img
+              src={featuredImage}
+              alt="PlayStation gaming console rental"
+              onError={() => setImageFailed(true)}
+            />
+          ) : (
+            <Gamepad2 className="hero-image-fallback" aria-hidden="true" />
+          )}
         </div>
-
+        <div className="hero-brand-strip" aria-label="Gaming platforms">
+          <span>PLAYSTATION</span>
+          <span>XBOX</span>
+          <span>META QUEST</span>
+        </div>
       </div>
 
     </section>

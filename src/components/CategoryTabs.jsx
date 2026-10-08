@@ -1,41 +1,30 @@
-function CategoryTabs({ selectedCategory, setSelectedCategory }) {
-  const categories = [
-    "All",
-    "PS5",
-    "Games",
-    "Racing",
-  ];
+import { Camera, Gamepad2, TentTree, TvMinimalPlay } from "lucide-react";
 
+const departments = [
+  { name: "Photography", icon: Camera },
+  { name: "Gaming", icon: Gamepad2 },
+  { name: "Outdoor", icon: TentTree },
+  { name: "Entertainment", icon: TvMinimalPlay },
+];
+
+function CategoryTabs({ activeDepartment, onSelectDepartment }) {
   return (
-    <section className="category-section" id="categories">
-
-      <div className="category-heading">
-        <p className="section-label">EXPLORE OUR COLLECTION</p>
-
-        <h2>Gaming gadgets for every kind of player</h2>
-
-        <p>
-          Choose your favourite gaming setup and rent it for as long as you need.
-        </p>
-      </div>
-
-      <div className="category-tabs">
-        {categories.map((category) => (
+    <nav className="department-navigation" id="categories" aria-label="Product departments">
+      <div className="department-navigation-inner">
+        {departments.map(({ name, icon: Icon }) => (
           <button
-            key={category}
-            className={
-              selectedCategory === category
-                ? "category-tab active"
-                : "category-tab"
-            }
-            onClick={() => setSelectedCategory(category)}
+            type="button"
+            key={name}
+            className={activeDepartment === name ? "department-tab active" : "department-tab"}
+            aria-pressed={activeDepartment === name}
+            onClick={() => onSelectDepartment(name)}
           >
-            {category}
+            <Icon size={18} aria-hidden="true" />
+            {name}
           </button>
         ))}
       </div>
-
-    </section>
+    </nav>
   );
 }
 

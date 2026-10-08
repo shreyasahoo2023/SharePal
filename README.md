@@ -1,16 +1,25 @@
-# React + Vite
+# SharePal Gaming Rentals
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and Vite frontend recreation of SharePal's Bangalore gaming-rentals page.
+Product listings are kept in `src/data/product-list.json`.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+From this directory, install the dependencies and start the development server:
 
-## React Compiler
+```sh
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Vite prints the local URL when the server is ready. To create a production build,
+run `npm run build`; to check code style, run `npm run lint`.
 
-## Expanding the ESLint configuration
+## Demo behavior
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Rental date selection, product filtering and search, the wishlist, shopping bag,
+FAQ accordion, recommendation form, and help panel work in the browser. Wishlist,
+bag contents, recommendations, and demo account credentials are stored in
+`localStorage`. Demo accounts are not secure authentication; rentals and
+recommendations are not sent to a backend, and checkout/payment are not
+implemented.

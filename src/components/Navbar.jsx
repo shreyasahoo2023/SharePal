@@ -9,6 +9,7 @@ import {
   X,
   User,
   Trash2,
+  CalendarDays,
 } from "lucide-react";
 
 function Navbar({
@@ -19,6 +20,10 @@ function Navbar({
   rentals,
   onRemoveRental,
   onLogin,
+  startDate,
+  endDate,
+  onDateChange,
+  onApplyDates,
 }) {
   const [menuOpen, setMenuOpen] =
     useState(false);
@@ -27,6 +32,9 @@ function Navbar({
     useState(false);
 
   const [bagOpen, setBagOpen] =
+    useState(false);
+
+  const [mobileSearchOpen, setMobileSearchOpen] =
     useState(false);
 
   const popupRef = useRef(null);
@@ -130,9 +138,22 @@ function Navbar({
     setMenuOpen(false);
   };
 
+  const handleApplyDates = () => {
+    onApplyDates();
+    document.getElementById("rental-dates")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+
+  const today = new Date();
+  const minimumDate = `${today.getFullYear()}-${String(
+    today.getMonth() + 1,
+  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
   return (
     <>
-      <header className="navbar">
+      <header className="navbar" id="location">
         <div className="navbar-container">
           {/* Logo */}
           <div className="navbar-logo">
@@ -145,19 +166,37 @@ function Navbar({
               <MapPin size={17} />
               Bangalore
             </a>
-
-            <a href="#gaming">
-              Gaming
-            </a>
-
-            <a href="#categories">
-              Categories
-            </a>
-
-            <a href="#faq">
-              FAQs
-            </a>
           </nav>
+
+          <div className="navbar-date-controls">
+            <label>
+              <span>Delivery</span>
+              <input
+                type="date"
+                min={minimumDate}
+                value={startDate}
+                onChange={(event) =>
+                  onDateChange("start", event.target.value)
+                }
+                aria-label="Delivery date"
+              />
+            </label>
+            <label>
+              <span>Pickup</span>
+              <input
+                type="date"
+                min={startDate || minimumDate}
+                value={endDate}
+                onChange={(event) =>
+                  onDateChange("end", event.target.value)
+                }
+                aria-label="Pickup date"
+              />
+            </label>
+            <button type="button" onClick={handleApplyDates}>
+              Select
+            </button>
+          </div>
 
           {/* Search */}
           <div className="navbar-search">
@@ -194,7 +233,7 @@ function Navbar({
             {/* Wishlist */}
             <button
               type="button"
-              className={`icon-button ${
+              className={`icon-button wishlist-button ${
                 wishlistOpen
                   ? "active"
                   : ""
@@ -242,9 +281,19 @@ function Navbar({
               className="login-button"
               onClick={onLogin}
             >
+              <User size={17} className="login-user-icon" />
               Login
             </button>
           </div>
+
+          <button
+            type="button"
+            className="mobile-search-toggle"
+            onClick={() => setMobileSearchOpen((open) => !open)}
+            aria-label={mobileSearchOpen ? "Close search" : "Open search"}
+          >
+            {mobileSearchOpen ? <X size={21} /> : <Search size={21} />}
+          </button>
 
           {/* Mobile Menu Button */}
           <button
@@ -267,6 +316,30 @@ function Navbar({
           </button>
         </div>
       </header>
+
+      {mobileSearchOpen && (
+        <div className="navbar-search mobile-navbar-search">
+          <Search size={18} />
+          <input
+            type="search"
+            placeholder="Search gaming products"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            aria-label="Search gaming products"
+            autoFocus
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              className="search-clear-button"
+              onClick={() => setSearchTerm("")}
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Popup Container */}
       <div ref={popupRef}>
@@ -561,6 +634,35 @@ function Navbar({
           >
             FAQs
           </a>
+
+          <div className="mobile-date-controls">
+            <label>
+              Delivery date
+              <input
+                type="date"
+                min={minimumDate}
+                value={startDate}
+                onChange={(event) =>
+                  onDateChange("start", event.target.value)
+                }
+              />
+            </label>
+            <label>
+              Pickup date
+              <input
+                type="date"
+                min={startDate || minimumDate}
+                value={endDate}
+                onChange={(event) =>
+                  onDateChange("end", event.target.value)
+                }
+              />
+            </label>
+            <button type="button" onClick={handleApplyDates}>
+              <CalendarDays size={17} />
+              Select dates
+            </button>
+          </div>
 
           <button
             type="button"

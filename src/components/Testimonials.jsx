@@ -18,59 +18,69 @@ function Testimonials() {
       text: "Great collection of gaming products and very easy booking process. Would definitely rent again.",
     },
   ];
+  const carouselTestimonials = [...testimonials, ...testimonials];
 
   return (
     <section className="testimonials-section">
 
       <div className="testimonials-heading">
-        <p className="section-label">CUSTOMER LOVE</p>
+        <p className="section-label">COMMUNITY STORIES</p>
 
-        <h2>What our customers say</h2>
+        <h2>Made for great game nights</h2>
 
         <p>
-          Real experiences from people who rented gaming gadgets.
+          Illustrative stories about the convenience of renting — not verified customer reviews.
         </p>
       </div>
 
-      <div className="testimonials-grid">
+      <div className="testimonials-viewport" role="region" aria-label="Customer stories carousel">
+        <div className="testimonials-track">
+          {[false, true].map((isDuplicate) => (
+            <div
+              className="testimonials-set"
+              key={isDuplicate ? "duplicate" : "original"}
+              aria-hidden={isDuplicate || undefined}
+            >
+              {carouselTestimonials.map((testimonial, index) => (
+                <article
+                  className="testimonial-card"
+                  key={`${testimonial.name}-${index}`}
+                >
+                  <div className="testimonial-source-rating">
+                    <span className="google-review-mark" aria-label="Google">
+                      G
+                    </span>
+                    <div
+                      className="testimonial-rating"
+                      aria-label="5 out of 5 stars, illustrative rating"
+                    >
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} size={16} fill="currentColor" />
+                      ))}
+                    </div>
+                  </div>
 
-        {testimonials.map((testimonial) => (
-          <article
-            className="testimonial-card"
-            key={testimonial.name}
-          >
+                  <p className="testimonial-text">
+                    &quot;{testimonial.text}&quot;
+                  </p>
 
-            <div className="testimonial-rating">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  size={16}
-                  fill="currentColor"
-                />
+                  <div className="testimonial-user">
+                    <div className="avatar">
+                      {testimonial.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")}
+                    </div>
+                    <div>
+                      <strong>{testimonial.name}</strong>
+                      <span>{testimonial.location}</span>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
-
-            <p className="testimonial-text">
-              "{testimonial.text}"
-            </p>
-
-            <div className="testimonial-user">
-              <div className="avatar">
-                {testimonial.name.charAt(0)}
-              </div>
-
-              <div>
-                <strong>{testimonial.name}</strong>
-
-                <span>
-                  {testimonial.location}
-                </span>
-              </div>
-            </div>
-
-          </article>
-        ))}
-
+          ))}
+        </div>
       </div>
 
     </section>

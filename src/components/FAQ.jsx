@@ -6,29 +6,34 @@ function FAQ() {
 
   const faqs = [
     {
-      question: "How does gaming gadget rental work?",
+      question: "How can I rent from SharePal?",
       answer:
-        "Choose your gaming gadget, select your rental dates, and book the product. The gadget will be delivered to your selected location.",
+        "Choose a product, select your delivery and pickup dates, and add it to your bag. This page is a frontend demo, so it does not place a real order or arrange delivery.",
     },
     {
-      question: "What gaming consoles can I rent?",
+      question: "If I rent multiple products, do I need to extend the rental duration for all?",
       answer:
-        "You can rent PS5 consoles, gaming bundles, controllers and popular gaming titles from our available collection.",
+        "No. Each product rental has its own selected duration. Contact SharePal support for help managing a real booking.",
     },
     {
-      question: "Can I choose the rental duration?",
+      question: "When does the rental start?",
       answer:
-        "Yes. Select your preferred start and return dates while checking the availability of the product.",
+        "The rental period begins on the delivery date you select. Pickup must be at least one day after delivery.",
     },
     {
-      question: "What happens if a product is out of stock?",
+      question: "What happens if I damage the product?",
       answer:
-        "Products that are currently unavailable are marked as Out of Stock. You can check again later for availability.",
+        "Please contact SharePal support promptly if an item is damaged. Actual assessment and charges depend on the applicable rental terms.",
     },
     {
-      question: "Can I extend my rental?",
+      question: "Can I cancel my rental?",
       answer:
-        "Rental extensions depend on product availability. Contact support before your return date to check whether an extension is possible.",
+        "Cancellation rules depend on the booking terms. No real booking is created by this demonstration site.",
+    },
+    {
+      question: "How does delivery and pickup work?",
+      answer:
+        "SharePal coordinates doorstep delivery and pickup for eligible real rentals. This demo lets you explore dates and prices but does not arrange a delivery.",
     },
   ];
 
@@ -44,7 +49,7 @@ function FAQ() {
         <h2>Frequently Asked Questions</h2>
 
         <p>
-          Everything you need to know about renting gaming gadgets.
+          Helpful information about the SharePal rental experience.
         </p>
       </div>
 
@@ -57,7 +62,11 @@ function FAQ() {
             key={faq.question}
           >
             <button
+              type="button"
               className="faq-question"
+              aria-expanded={openIndex === index}
+              aria-controls={`faq-answer-${index}`}
+              id={`faq-question-${index}`}
               onClick={() => toggleFAQ(index)}
             >
               <span>{faq.question}</span>
@@ -68,11 +77,17 @@ function FAQ() {
               />
             </button>
 
-            {openIndex === index && (
+            <div
+              className={`faq-answer-wrap ${openIndex === index ? "open" : ""}`}
+              id={`faq-answer-${index}`}
+              role="region"
+              aria-labelledby={`faq-question-${index}`}
+              aria-hidden={openIndex !== index}
+            >
               <div className="faq-answer">
                 <p>{faq.answer}</p>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
