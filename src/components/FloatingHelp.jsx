@@ -1,9 +1,7 @@
-import { ArrowUp, CalendarDays, MessageCircle, X } from "lucide-react";
+import { ArrowUp, CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
 
 function FloatingHelp({ datesConfirmed, startDate, endDate }) {
-  const [chatOpen, setChatOpen] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState("");
   const [showGoTop, setShowGoTop] = useState(false);
   const rentalDays =
     startDate && endDate
@@ -37,38 +35,6 @@ function FloatingHelp({ datesConfirmed, startDate, endDate }) {
           : "Select rental dates to view prices"}
       </button>
 
-      {chatOpen && (
-        <section className="chat-help-panel" aria-label="SharePal help panel">
-          <div className="chat-help-header">
-            <div>
-              <strong>SharePal Help</strong>
-              <span>Frontend demo · no live agent</span>
-            </div>
-            <button type="button" onClick={() => setChatOpen(false)} aria-label="Close help panel">
-              <X size={19} />
-            </button>
-          </div>
-          <p>Hi! How can we help you?</p>
-          <div className="chat-help-topics">
-            {["Rental Help", "Delivery", "Product Help"].map((topic) => (
-              <button
-                type="button"
-                key={topic}
-                onClick={() => setSelectedTopic(topic)}
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
-          {selectedTopic && (
-            <p className="chat-help-response" role="status">
-              For {selectedTopic.toLowerCase()}, explore the rental dates and FAQ on
-              this page. This demo does not connect to live support.
-            </p>
-          )}
-        </section>
-      )}
-
       {showGoTop && (
         <button
           type="button"
@@ -80,15 +46,6 @@ function FloatingHelp({ datesConfirmed, startDate, endDate }) {
         </button>
       )}
 
-      <button
-        type="button"
-        className="floating-chat-button"
-        onClick={() => setChatOpen((open) => !open)}
-        aria-label={chatOpen ? "Close help chat" : "Open help chat"}
-        aria-expanded={chatOpen}
-      >
-        {chatOpen ? <X size={23} /> : <MessageCircle size={23} />}
-      </button>
     </>
   );
 }

@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import GearRentalBanner from "./components/GearRentalBanner";
 import RecommendationForm from "./components/RecommendationForm";
 import FloatingHelp from "./components/FloatingHelp";
+import AIChatbot from "./components/AIChatbot";
 import Toast from "./components/Toast";
 import productData from "./data/product-list.json";
 
@@ -206,6 +207,25 @@ function App() {
     setSelectedCategory("All");
   };
 
+  const showChatbotProducts = (query) => {
+    setActiveDepartment("Gaming");
+    setSelectedCategory("All");
+    setSearchTerm(query);
+    window.setTimeout(() => {
+      document.getElementById("gaming")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
+  const showRentalDates = () => {
+    document.getElementById("rental-dates")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+
   if (loginOpen) {
     return <Login onClose={() => setLoginOpen(false)} />;
   }
@@ -280,6 +300,10 @@ function App() {
         datesConfirmed={datesConfirmed}
         startDate={startDate}
         endDate={endDate}
+      />
+      <AIChatbot
+        onViewProducts={showChatbotProducts}
+        onViewDates={showRentalDates}
       />
       <Toast key={toast?.id || "empty"} message={toast} onClose={dismissToast} />
     </>
